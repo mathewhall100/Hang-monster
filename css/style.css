@@ -1,0 +1,154 @@
+/* Stylesheet for Hangmonster site */
+
+
+/* ------general styles & bacground image--- */
+
+html, body {
+	height: 100%; 
+	min-width: 400px;
+} 
+
+body {
+	font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+	font-size: 18px;
+	margin: 0;
+	color: #777;
+
+	background-image: url("../images/strThingsBackground.jpg");
+	background-repeat: no-repeat;
+	background-position: top left;
+	background-color: #aaa;
+
+	display: flex;
+	flex-direction: column; 
+}
+
+h1, h2, h3, h4 {
+	font-family: 'Georgia', Times, Times New Roman, serif;
+	font-weight: bold;
+}
+
+h1 { 
+    font-size: 2em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+h3 { 
+    font-size: 1.17em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+h4 { 
+	font-size: 1em;
+    margin-top: 1.33em;
+    margin-bottom: 1.33em;
+    margin-left: 0;
+} 
+
+p {
+	font-size: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.clearfix{
+	content: “”;    
+	display: block;
+	clear: both;
+} 
+
+* {box-sizing: border-box;}
+
+.allcontent {
+	flex:1 0 auto;
+}
+
+
+/* ------Game header styles--- */
+
+header {
+	width: 100%;
+	margin-bottom: 40px;
+}
+
+.gameheader {
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+.gameheader h1, .gameheader h2 {
+	text-align: center;
+	font-family: 'Sancreek', cursive;
+	letter-spacing: 0.3em;
+}
+
+.gameheader h2 {
+	font-size: 1.27em;
+	letter-spacing: 1em;
+}
+
+
+/* ------B Box structure for game animations and controls--- */
+
+section {
+	width: 100%;
+	margin-bottom: 40px;
+}
+
+.gamebox {
+	max-width: 600px;
+	height: 600px;
+	margin: 0 auto;
+}
+
+.hangboxcanvas {
+	width: 100%;
+	height: 320px;
+	border: 2px solid #333;
+	padding: 5px;
+	margin-bottom: 5px;
+
+}
+
+.hangbox {
+	width: 50%;
+	height: 100%;
+	border: 2px solid #333;
+	float: left;
+
+}
+
+.monsterbox {
+	width: 50%;
+	height: 100%;
+	border: 2px solid #333;
+	float: right;
+}
+
+
+.controlsbox {
+	width: 100%;
+	height: 320px;
+	border: 2px solid #333;
+
+}
+
+
+
+
+
+/* ------Footer styles--- */
+
+footer {
+	clear: both; 
+	width: 100%;
+	height: 80px;
+	text-align: center;
+}
+
+footer p {
+	font-size: 14px;
+	padding: 10px 0 20px 0;
+}
