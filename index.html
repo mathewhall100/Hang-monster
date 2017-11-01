@@ -24,7 +24,7 @@
 
 <body>
 
-	<div class="allcontent">  <!-- wrapper for all content for flexbox for sticky footer -->
+<div class="allcontent">  <!-- wrapper for all content for flexbox for sticky footer -->
 
 
 	<!-- _____________________  Header _________________________ -->
@@ -46,44 +46,46 @@
 	<!-- _____________________  Game Space _________________________ -->
 
 
-	<section>
-		<div class="gamebox">
+	<section class="gamebox">
 			
 
-
-			<div class="hangboxcanvas">
+			<div class="hangboxcanvas"> 
 				
 				<div class="hangbox">
-
 					<p id="gameinstructions"></p>
-			
 				</div>
 			
 			
 				<div class="monsterbox">
-					<div id="monsterbx">
-					</div>
-
+					<div id="monsterbx"></div>
 				</div>  
 
 			</div> 
 
 
 
-			<div class="controlsbox">
+			<div class="controlsbox clearfix">
 
-				<div id="wordholder" class="wcenter">
-					<p id="guessword" ></p>
+				<div class="warning">
+					<p id="warningmsg"> </p>
 				</div>
 
-				<div class="clearfix kcenter">
-					<p id="guesses">Guesses so far: </p>
+				<div class="statusstyle">
+					<p id="statusword"></p>
 				</div>
 
-			
 
-				<div id="keyboard">
-					<div class="kcenter">
+				<div class="left">
+					<p id="letused" ">Letters used: </p>
+				</div>
+
+				<div class="right">
+					<p id="lives" >Lives remaining: </p>
+				</div>
+
+
+				<div id="keyboard" class="clearfix center">
+					<div>
 						<button type="button" id="keyQ" class="key">q</button>
 						<button type="button" id="keyW" class="key">w</button>
 						<button type="button" id="keyE" class="key">e</button>
@@ -94,8 +96,8 @@
 						<button type="button" id="keyI" class="key">i</button>
 						<button type="button" id="keyO" class="key">o</button>
 						<button type="button" id="keyP" class="key">p</button>
-					<div>
-					<div class="kcenter2">
+					</div>
+					<div>&nbsp;&nbsp;&nbsp;
 						<button type="button" id="keyA" class="key">a</button>
 						<button type="button" id="keyS" class="key">s</button>
 						<button type="button" id="keyD" class="key">d</button>
@@ -105,8 +107,8 @@
 						<button type="button" id="keyJ" class="key">j</button>
 						<button type="button" id="keyK" class="key">k</button>
 						<button type="button" id="keyL" class="key">l</button>
-					<div>
-					<div class="kcenter3">
+					</div>
+					<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<button type="button" id="keyZ" class="key">z</button>
 						<button type="button" id="keyX" class="key">x</button>
 						<button type="button" id="keyC" class="key">c</button>
@@ -116,21 +118,11 @@
 						<button type="button" id="keyN" class="key">m</button>				
 					</div>
 
-
-
- 			<div>
-
-				<div id="startgame">
-					
-
 				</div>
 
-			</div>
+ 			</div> 
 
-
-		</div>
-
-
+				
 	</section>
 
 
