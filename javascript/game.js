@@ -1,227 +1,171 @@
 
 
 
-/* ----Initialise global variables ------ */
+/* -----------------------------Initialise global variables --- ---------------------------------------- */
+
+/* can be altered and added to as required here */
+
 
 var lettersArray = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
         'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
         't', 'u', 'v', 'w', 'x', 'y', 'z', ];
 
-  var monstersArray = [
-  					['demogorgon', 'the faceless Prince of Demons', 'https://en.wikipedia.org/wiki/Demogorgon', 'demogorgon.jpg',],
-  					['demogorgon', 'the faceless Prince of Demons', 'https://en.wikipedia.org/wiki/Demogorgon', 'demogorgon.jpg',],
-  					['pollywog', 'a monstrous tadpole', 'https://www.popsugar.com/entertainment/What-Pollywog-44191387', 'polliwog.jpg',],
-  					['hydra', 'a many headed serpent', 'https://en.wikipedia.org/wiki/Hydra', 'hydra.jpg',],
-  					['cyclops','a one eyed monster who lives in a cave', 'https://en.wikipedia.org/wiki/Cyclops', 'cyclops.jpg'],
-  					['zombie', 'a reanimated - usually very pale - human corpse!','https://en.wikipedia.org/wiki/Zombie', 'zombie.jpg'],
-  					  ];
+var monstersArray = [	// Array of arrays (2D array) to hold monster data for use in program INdex: (0)name, (1)hint, (2)web reference, (3)picture
 
-  var instructions = '<p>We all love Stranger Things! <br /><br />' +
+	  					['demogorgon', 'the faceless Prince of Demons', 'https://en.wikipedia.org/wiki/Demogorgon', 'demogorgon.jpg',],
+	  					['pollywog', 'a monstrous tadpole', 'https://www.popsugar.com/entertainment/What-Pollywog-44191387', 'polliwog.jpg',],
+	  					['hydra', 'a many headed serpent', 'https://en.wikipedia.org/wiki/Hydra', 'hydra.jpg',],
+	  					['cyclops','a one eyed monster who lives in a cave', 'https://en.wikipedia.org/wiki/Cyclops', 'cyclops.jpg'],
+	  					['zombie', 'a reanimated - usually very pale - human corpse!','https://en.wikipedia.org/wiki/Zombie', 'zombie.jpg'],
+  					];
+
+var instructions = '<p>We all love Stranger Things! <br /><br />' +				// Initial instrcutions 
   					 'BUT do you know your MONSTERS!! <br /><br />' +
   					 'Pit yourself against our Stranger Things Hang-Monster game <br />' +
   					 'and win the right to add your own favourite monster to the game!</p>';
 
-  var headerText = 'Stranger Things';		  
 
-  var guesses = [];
-  var letUsed = [];
-  var keyPressed = "";
-  var numLives = 12;
-  var numCorrectGuesses = 0;
-  var word = "";
-  var wordGuessed = "";
-  var randNum = 0;
+/* ----------------------------- Create game as an object with properties and methods ------------------------------------------- */
 
-  var getLives = document.getElementById("lives");
-  var getLetUsed = document.getElementById("letused");
-  var warnMsg = document.getElementById("warningmsg"); 
-  var guessWd = document.getElementById("statusword"); 
-  var keyBd = document.getElementById("keyboard"); 
 
-  					
-window.onload = function () {  // run initialisation code as soon as page loads
+/* Initialise game Object */
+
+var game = new Object();
 
 
 
-/* ---- call setup function ------ */
+/* Properties */
 
-setUp('headertext', 'Stranger Things', 200);
+game.guesses = [];	 		// Array to hold correct letterrs guessed
+game.letUsed = [];   		// Array to hold letters used (i.e. unique keys entered)
+game.keyPressed = "";		// Holds the current keypress
 
+game.word = "";				// Holds monstername to be guessed
+game.wordGuessed = "";		// Holds string of current state of users guess
+game.randNum = 0;			// Random number generated and used as indexer for monsterArray
 
+game.numLives = 12;  		// Tally of number of uiques keys pressed (users lives)
 
- /* Handover to event handler function for keypresses*/
-  /* Core control logic for game*/
+game.getLives = document.getElementById("lives");			// Holds id of element where users lives displayed
+game.getLetUsed = document.getElementById("letused");		// Holds id of element where used letters are displayed
+game.getHint = document.getElementById("hint"); 	    	// Holds id of element where hint displayed
+game.getWarnMsg = game.getHint;								// Warnings also displayed in hints element
+game.getGuessWd = document.getElementById("statusword"); 	// Holds id of element where correct guesses displayed
 
+game.getInstructBox = document.getElementById('hangboxtext'); // Holds id of element of instructions box
 
-function guessAction(e) {
-		var notTwice = 0;
-		var keyPressed = e.target.innerHTML;							// get keypressed from innerHTML of container event		
-		if (keyPressed.length >1) {keyPressed = ""; numLives++;}		// filter out keypresses outside of keys themselves
+game.getHeaderText = document.getElementById('headertext'); // Holds id of heading
+game.getSubHeadText= document.getElementById('subheadtext');// Holds id of subheader
 
-			if ((letUsed.length > 0) && (letUsed.indexOf(keyPressed) >= 0)) {
+game.getKeyboard = document.getElementById('keyboard');		// Holds id of containing element of keyboard (used for eventlistener)
 
-					if (notTwice = 0) {numLives++; notTwice = 1}
-					warnMsg.innerHTML="Letter already selected. Please select another";
-				}	
-
-
-			else {
-
-				 giveHint(randNum); 
-
-				for (var i=0; i < word.length; i++) { 
-
-					if (word[i] == keyPressed) {
-
-						guesses[i] = keyPressed;
-						}
-
-						else {
-
-							// function to build more gallows
-						}
-				
-				}
-
-				wordGuessed = printGuesses(guesses);
-
-				letUsed.push(keyPressed);
-				updateLetUsed(letUsed);
-
-				numLives--;
-				updateLives(numLives);
-				notTwice = 0;
-				
-				}
+/* Methods */
 
 
-			if (numLives == 0) {			// game over - player lost
-				gameLost(word);
-			}
+/* Function: Initial set up of the game */
 
-
-			if (wordGuessed == word) {		// game over - player won
-				gameWon(word);
-
-			}
-
-		 
-}
-
-
-
-/* -----------------------------------------Functions ----------------------------------------*/
-
-
-
-/* ---- setup function including printing game headers using interval delays ------ */
-
-function setUp(destination, message, delay){
-    var i = 0;
-    var interval = setInterval(function(){        									// will execute 'function every 'delay' 
-        document.getElementById(destination).innerHTML += message.charAt(i); 		// gets current innerHTML and adds next character
-        i++;																		// for loop to step through 'message'
+game.setUp = function(message, delay) {								// Set up an interval timer to display heading letters one by one
+    var i = 0;					
+    var interval = setInterval(function() {        					// Will execute 'function every 'delay' 
+        game.getHeaderText.innerHTML += message.charAt(i); 			// Gets current innerHTML and adds next character
+        i++;														// For loop to step through 'message'
         if (i > message.length){
-            clearInterval(interval);												// until cleared by clearInterval
-            document.getElementById('subheadtext').innerHTML='Hang-Monster!';       // print sub-heading when main heading finished printing
+            clearInterval(interval);								// Until cleared by clearInterval
 
-            
+            /* Then go on and set up rest of gamepage 
+			   note must be within interval loop to occus asynchronously */
+            												
+            game.getSubHeadText.innerHTML='Hang-Monster!';      	// Print sub-heading when main heading finished printing
 
+            game.printFunc('hangboxtext', instructions);			// Display initial text & instructions
 
-            printFunc('hangboxtext', instructions);
+            game.imageAdd('monsterbx', 'images/poster.JPG');		// Display the initial image
 
-            imageAdd('monsterbx', 'images/poster.JPG');
+            game.word = game.randWord(monstersArray);				// Get a random monstername to be guessed
 
-            word = randWord(monstersArray);
+            game.guesses = game.initGuesses(game.word);				// Converts monstername to an appropraite length string of underscores for display
 
-            guesses = initGuesses(word);
+            game.printGuesses(game.guesses);						// Displays players guesses (initialy just underscores)
 
-            printGuesses(guesses);
+            game.updateLives(game.numLives);						// Initilaises num user lives & displays
 
-            updateLives(numLives);
+            game.updateLetUsed(game.letUsed);						// initialises array of letters used by player & displays
 
-            updateLetUsed(letUsed);
-
-            giveHint(randNum);
+            game.giveHint(game.randNum);							// Finally displays hint
           
         }
-    }, delay);
+    }, delay);														// End of interval function
 }
 
+/* Function: Output content to to an element */
 
-/* Function: Print Instructions */
-
- function printFunc(destination, msg) {
+  game.printFunc = function(destination, msg) {						// Target element and message to be displayed passed to function
  	document.getElementById(destination).innerHTML=msg;	
- }
+ };
 
 
+ /* Function: Add image to container*/
 
- /* Function: add image to monsterbox */
-
-function imageAdd(destination, monsterImg) {
-	var elem = document.createElement('img');
-	elem.setAttribute('id', 'monstimage');
-	elem.setAttribute('src', monsterImg);
-	elem.setAttribute('height', '290px');
-	elem.setAttribute('max-width', '290px');
-	elem.setAttribute('alt', 'The demogorgon');
-	document.getElementById(destination).appendChild(elem);
-}
-
-
- /* Function: change image in monsterbox */
-
-function imageChange(dest, newImg) {
-	var elem = document.getElementById(dest);
-	elem.setAttribute('src', newImg);
-	
-}
+ game.imageAdd = function(destination, monsterImg) {				// Target elemnt and image path passed to function
+	var elem = document.createElement('img');						// Creates a new img element
+		elem.setAttribute('id', 'monstimage');						// Sets attributes
+		elem.setAttribute('src', monsterImg);						
+		elem.setAttribute('height', '290px');
+		elem.setAttribute('max-width', '290px');
+		elem.setAttribute('alt', 'The demogorgon');
+	document.getElementById(destination).appendChild(elem);			// Appends to parent element (as passed to function) in DOM 
+};
 
 
+/* Function: Change image in container*/
 
- /* create word to guess using random function om contentArray */
+game.imageChange = function(destination, newImg) {
+	var elem = document.getElementById(destination);
+	elem.setAttribute('src', newImg);	
+};
 
- function randWord(array) {
- 	var checkDifferent = randNum;
- 	while (randNum == checkDifferent) {
- 		randNum = Math.round((Math.random()*(array.length-1)));}
- 
- 	var wd = array[randNum] [0]; 
+
+/* Function: Generate and return a random monstername from the array monsterArray
+   Make sure it is different from previous monster */
+
+game.randWord = function (array) {
+ 	
+ 	var checkDifferent = game.randNum;
+ 	while (game.randNum == checkDifferent) {								// Random number generation repeats until new number is different from previous
+ 		game.randNum = Math.round((Math.random()*(array.length-1)));}		// Make number 0 - length of passed in array (in this case monsterArray)
+ 	var wd = array[game.randNum] [0]; 
  	return wd;
- }
+ };
 
 
+/* Function: Creates a string of underscores corresponding to letters in monstername to be guessed */
+  
 
- /* Function: create guesses array and placeholders*/
-
-function initGuesses(wd) {
+game.initGuesses = function (wd) {
 
 	var letter = "";
 	var msg = "";
 
-	for (var i = 0; i < wd.length; i++) {
+	for (var i = 0; i < wd.length; i++) {			// Loop through letters in word to be guessed
 
-		if (wd[i] === '-') {
+		if (wd[i] === '-') {   						// Allow for hyphens in monsternames*/
 			letter = "-";
 			}
 			else {
-			letter = "_";
+			letter = "_";							// otherwise an underscore
 			}
 
-		guesses.push(letter);
+		game.guesses.push(letter);					// push either '_' or '-' to array game.guesses
 
 		}
 
-	return guesses;
-
-	}
-
+	return game.guesses;
+};
 
 
- /* Function: creates a string from the guesses array and prints it to the statusbox*/
+/* Function: Converts game.guesses array to a string and prints it to the statusbox*/
 
-function printGuesses(gs) {
+game.printGuesses = function(gs) {
 	
 	var letter = "";
 	var msg = "";
@@ -231,23 +175,21 @@ function printGuesses(gs) {
 		msg = msg + gs[i];
 	}
 
-	guessWd.innerHTML = msg;
+	game.getGuessWd.innerHTML = msg;
 	return msg;
-
-	}
-
+};
 
 
- /* Function: update the number of lives*/
+ /* Function: Displays number of player lives left in the DOM*/
 
- function updateLives (num) {
- 	getLives.innerHTML = "Lives remaining: " + num;
- }
+game.updateLives = function(num) {
+ 	game.getLives.innerHTML = "Lives remaining: " + num;
+ };
 
 
- /* Function: update array of used letters*/
+ /* Function: Converts used letters array to a string and displays it in the DOM*/
 
- function updateLetUsed(array) {
+ game.updateLetUsed = function(array) {
  	var msg = "";
 
  	for (var i=0; i < array.length; i++) {
@@ -256,131 +198,213 @@ function printGuesses(gs) {
 
  	if (msg == "") {msg = "0";}
 
- 	getLetUsed.innerHTML = "Letters used: " + msg;
- }
+ 	game.getLetUsed.innerHTML = "Letters used: " + msg;
+ };
 
-function giveHint(ind) {
+
+ /* Function: Get and Show the hint*/
+
+game.giveHint = function(ind) {
 	var msg = "Hint: " + monstersArray[ind] [1];
-	warnMsg.innerHTML = msg;
+	game.getHint.innerHTML = msg;
+};
 
-}
 
+ /* Function: Game lost actions*/
 
- /* Function: game lost actions*/
-
-function gameLost(wd) {
+game.gameLost = function(wd) {														// construct some HTML & text
 	var msg = '<h1 class="gameoverh">GAME OVER<h1>' + 
 			  '<p class="gameoverp">The monster was a ' + 
-			  '<span class="gameoverm">' + wd + '</span>.</p>'+
+			  '<span class="gameoverm">' + wd + '</span>.</p>'+						// Add a class for styling
 			  '<p class="gameoverp">Read more about this monster <br />' + 
-			  '<a href=monstersArray[randNum] [3] target="_blank" class="gameoverl">HERE</a></p>';
+			  '<a href=monstersArray[game.randNum] [3] target="_blank" class="gameoverl">HERE</a></p>'; // Add a link
 
 
-	printFunc('hangboxtext', msg);
+	game.printFunc('hangboxtext', msg);												// Display by updating DOM
 
-	var monst = "images/" + monstersArray[randNum] [3];
-	imageChange('monstimage', monst);
+	var monst = "images/" + monstersArray[game.randNum] [3];						// Display image of current monster
+	game.imageChange('monstimage', monst);
 
-	againOrQuit();
-}
+	game.againOrQuit();																// call the again Or Quit function
+};
 
- /* Function: game won actions*/
 
-function gameWon(wd) {
+ /* Function: Game won actions*/
+
+game.gameWon = function(wd) {														// "" see above
 
 	var msg = '<h1 class="youwonh">You Won!<h1>' + 
 			  '<p class="gameoverp">The monster was a ' + 
 			  '<span class="gameoverm">' + wd + '</span>.</p>'+
 			  '<p class="gameoverp">Read more about this monster <br />' + 
-			  '<a href=monstersArray[randNum] [3] target="_blank" class="gameoverl">HERE</a></p>';
+			  '<a href=monstersArray[game.randNum] [3] target="_blank" class="gameoverl">HERE</a></p>';
 
 
-	printFunc('hangboxtext', msg);
+	game.printFunc('hangboxtext', msg);
 
-	var monst = "images/" + monstersArray[randNum] [3];
-	imageChange('monstimage', monst);
+	var monst = "images/" + monstersArray[game.randNum] [3];
+	game.imageChange('monstimage', monst);
 
-	againOrQuit();
-}
+	game.againOrQuit();
+};
 
  /* Function: create play again and quit buttons and add event handlers*/
 
-function againOrQuit() {
-	var elem = document.createElement('button');
-	elem.setAttribute('id', 'playagain');
-	elem.setAttribute('class', 'playagainbut');
-	elem.innerHTML = "Play Again";
-	document.getElementById('hangboxtext').appendChild(elem);
+game.againOrQuit = function() {													
 
-	elem = document.createElement('button');
-	elem.setAttribute('id', 'quit');
-	elem.setAttribute('class', 'quitbut');
-	elem.innerHTML = "Quit";
-	document.getElementById('hangboxtext').appendChild(elem);
+	var elem = document.createElement('button');									// create new button element
+		elem.setAttribute('id', 'playagain');										// Add attributes incl id for event listener
+		elem.setAttribute('class', 'playagainbut');									// Add attributes incl class for styling
+		elem.innerHTML = "Play Again";												// Give it some text to dispaly
+	game.getInstructBox.appendChild(elem);											// update DOM
 
-	var el1 = document.getElementById('playagain');
-	el1.addEventListener('click', playagain, false);
+	elem = document.createElement('button');										// "" See above
+		elem.setAttribute('id', 'quit');
+		elem.setAttribute('class', 'quitbut');
+		elem.innerHTML = "Quit";
+	game.getInstructBox.appendChild(elem);
 
-	var el2 = document.getElementById('quit');
-	el2.addEventListener('click', quitgame, false);
+	var el1 = document.getElementById('playagain');									// Add an event listener to new button
+	el1.addEventListener('click', game.playAgain, false);							// Has to be done in same funtion scope as button is created 
+																					// ** Note no parameters so no ()
+																					// ** If () included then function called immediately 
+																					// ** compare this to keyboard event listener where function has paraneters 
+																					// ** but to avoid immediate function call have function calling function ()
+																					
+
+	var el2 = document.getElementById('quit');										// "" See above
+	el2.addEventListener('click', game.quitGame, false);
+};
+
+
+  /* Function: Playagain
+     re-initialise game variables and run through required subset of startup functions */
+
+game.playAgain = function() {
+
+	game.guesses = [];
+    game.letUsed = [];
+  	game.keyPressed = "";
+
+  	game.numLives = 12;
+  	game.word = "";
+  	game.wordGuessed = "";
+
+  	game.printFunc('hangboxtext', instructions);
+
+    game.imageChange('monstimage', 'images/poster.JPG');
+
+    game.word = game.randWord(monstersArray);
+
+    game.guesses = game.initGuesses(game.word);
+
+    game.printGuesses(game.guesses);
+
+    game.updateLives(game.numLives);
+
+    game.updateLetUsed(game.letUsed);
+
+    game.giveHint(game.randNum);
+ };
+
+
+ /* Function: Quit the game */
+
+ game.quitGame = function() {
+ 	window.location.href = "https://www.netflix.com/title/80057281";		// Exit to stranger things website 
+ };
+
+
+
+/* ----------------------------------------- ______________ --------------------------------------------*/
+/* -----------------------------------------                --------------------------------------------*/
+/* ----------------------------------------- GAME RUN CODE  --------------------------------------------*/
+/* -----------------------------------------                --------------------------------------------*/
+/* ----------------------------------------- ______________ --------------------------------------------*/
+  					
+
+
+
+/* ----------------------------------------- Setup the game --------------------------------------------*/
+
+game.setUp('Stranger Things', 200); 					// Change text of heading and time delay between letters here
+
+
+
+/* ----------------------------------------- Keyboard Event Handler ----------------------------------------*/
+
+ /* Event Handler function for when a key is pressed
+    ****Could be included as a method oof the game object 
+        but nice to keep it outside as it's the central piece of game control logic****   */
+
+
+function guessAction(e) {
+		var notTwice = 0;
+		game.keyPressed = e.target.innerHTML;													// Get keypressed from innerHTML of container event (e)
+		if (game.keyPressed.length >1) {game.keyPressed = ""; game.numLives++;}					// Filter out keypresses outside of keys themselves
+console.log(game.keyPressed);
+			if ((game.letUsed.length > 0) && (game.letUsed.indexOf(game.keyPressed) >= 0)) {	// Filter out non-unique keypresses
+console.log(game.letUsed + "," + game.letUsed.indexOf(game.keyPressed));
+					if (notTwice = 0) {game.numLives++; notTwice = 1}							// Prevent multiple updates to numLives due to repeated keypresses of non-unique keys
+
+					game.getWarnMsg.innerHTML="Letter already selected. Please select another"; // Dispaly warning message 
+				}	
+
+
+			else {
+
+				 game.giveHint(game.randNum); 													// Replace warning message (if present) with hint
+
+				for (var i=0; i < game.word.length; i++) { 										// Loop through monstername to be guessed 
+
+					if (game.word[i] == game.keyPressed) {										// Compare each letter to user entered letter
+
+						game.guesses[i] = game.keyPressed;										// If match then place that letter into the correct guesses array at the correct position
+						}
+
+						else {
+
+							// Call function to build  gallows									// If no match I was going to draw some gallows but ran out of time!
+						}																		// More importnatly, DONT add anything to correct guesses array
+				
+				}
+
+				game.wordGuessed = game.printGuesses(game.guesses);								// Dispaly current state of user guesses 						
+
+				if (game.keyPressed != "") {game.letUsed.push(game.keyPressed)}					// Update and display used Letters with latast keypress (provided keyPress doesn't equal "")
+				game.updateLetUsed(game.letUsed);
+
+				game.numLives--;																// Decrement and display player lives
+				game.updateLives(game.numLives);
+				notTwice = 0;																	
+				
+				}
+
+
+			if (game.numLives == 0) {															// If Player lives fall to 0 then															
+				game.gameLost(game.word);														// Game over - player lost - call gameLost function
+			}
+
+
+			if (game.wordGuessed == game.word) {												// If current state of user guesses = monstername to be guessed (i.e. all underscores replaced by letters) then																		
+				game.gameWon(game.word);														// Game over - player won - call gameWon function
+																								// ** Note the wordGuessed string has no spaces since we separate out the letters using letter-spacing in the CSS
+
+			}		 
 
 }
 
 
+/* ----------------------------------------- keyboard Event Listener ----------------------------------------*/
 
+ /* Event listener for keyboard keypresses - 
+    **Note don't need event listener for individual keys as event bubbled up and 
+      captured by containing element with id keyboard */
 
-
- /* Function: quitgame*/
-
- function quitgame() {
- 	window.location.href = "https://www.netflix.com/title/80057281";
- }
-
-  /* Function: playagain*/
-
-function playagain() {
-
-	guesses = [];
-    letUsed = [];
-  	keyPressed = "";
-  	numLives = 12;
-  	numCorrectGuesses = 0;
-  	word = "";
-  	wordGuessed = "";
-  	randNum = 0;
-
-  	printFunc('hangboxtext', instructions);
-
-    imageChange('monstimage', 'images/poster.JPG');
-
-    word = randWord(monstersArray);
-
-    guesses = initGuesses(word);
-
-    printGuesses(guesses);
-
-    updateLives(numLives);
-
-    updateLetUsed(letUsed);
-
-    giveHint(randNum);
- }
-
-
-/* ----------------------------------------- Eventy handlers ----------------------------------------*/
-
- /* add event handler for keyboard keypresses - 
-    note don't need event handlers for each key as eevent bubbled up and 
-    captured by containing element, */
-
-	var el = document.getElementById('keyboard');
-	el.addEventListener('click', function(e) {guessAction(e);}, false);
-
-
-}; // close of windoes onload function	
-
-	
+game.getKeyboard.addEventListener('click', function(e) {guessAction(e);}, false);
 
 
 
 
+
+/* ----------------------------------------- End of code --------------------------------------------*/

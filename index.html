@@ -10,11 +10,11 @@
 	<title>Variation on the hangman game: HANGMONSTER!</title>
 
 	<!-- Reset CSS stylesheet -->
-	<link rel="stylesheet" type="text/css" href="css/reset.css"> 
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+
 	 <!-- General Styles --> 		
-	<link rel="stylesheet" type="text/css" href="css/style.css">	
-	<!-- Responive styles & mediaQueries -->	
-	<link rel="stylesheet" type="text/css" href="css/responsive.css">	
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	
 	<!-- google font sancreek -->
 	<link href="https://fonts.googleapis.com/css?family=Sancreek" rel="stylesheet">
 	
@@ -23,8 +23,6 @@
 </head>
 
 <body>
-
-<div class="allcontent">  <!-- wrapper for all content for flexbox for sticky footer -->
 
 
 	<!-- _____________________  Header _________________________ -->
@@ -66,8 +64,8 @@
 
 			<div class="controlsbox clearfix">
 
-				<div class="warning">
-					<p id="warningmsg">Hint: </p>
+				<div class="hintstyle">
+					<p id="hint">Hint: </p>
 				</div>
 
 				<div class="statusstyle">
@@ -76,17 +74,17 @@
 
 
 				<div class="left">
-					<p id="letused" ">Letters used: </p>
+					<p id="letused">Letters used: </p>
 				</div>
 
 				<div class="right">
-					<p id="lives" >Lives remaining: </p>
+					<p id="lives">Lives remaining: </p>
 				</div>
 
 
 				<div id="keyboard" class="clearfix center">
 					<div>
-						<button type="button" class="key">q</button>
+						<button type="button" id="keyq" class="key">q</button>
 						<button type="button" id="keyW" class="key">w</button>
 						<button type="button" id="keyE" class="key">e</button>
 						<button type="button" id="keyR" class="key">r</button>
@@ -124,9 +122,6 @@
 
 				
 	</section>
-
-
- </div>  <!-- closing div for flexbox container -->
 
 
 
