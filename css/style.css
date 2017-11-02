@@ -3,9 +3,6 @@
 
 /* ------general styles & bacground image--- */
 
-html, body {
-	height: 100%; 
-} 
 
 body {
 	font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
@@ -16,13 +13,10 @@ body {
 	background-image: url("../images/strThingsBackground.jpg");
 	background-repeat: no-repeat;
 	background-position: top left;
-	-color: #aaa;
-
-	display: flex;
-	flex-direction: column; 
+	color: #aaa;
 }
 
-h1, h2, h3, h4, {
+h1, h2, h3, h4 {
 	font-family: 'Georgia', Times, Times New Roman, serif;
 	font-weight: bold;
 }
@@ -60,9 +54,6 @@ p {
 
 * {box-sizing: border-box;}
 
-.allcontent {
-	flex:1 0 auto;
-}
 
 
 /* ------Game header styles--- */
@@ -193,13 +184,77 @@ button:hover {
 .center div:first-child {padding-top: 20px;}
 
 
+
+/* ------FGame over text styling--- */
+
+.gameoverh {
+	color: red;
+	padding-left: 40px;	
+}
+
+.youwonh {
+	color: yellow;
+	padding-left: 40px;	
+}
+
+.gameoverp {
+	color: #ddd;
+	font-size: 18px;
+
+}
+
+.gameoverm {
+	color: green;
+	font-size: 18px;
+}
+
+.gameoverp {
+	color: #ddd;
+	font-size: 18px;
+
+}
+
+.gameoverl {
+	text-align: center;
+	color: #ddd;
+	font-size: 18px;
+}
+
+.gameoverl:hover {
+	color: #aaa;
+}
+
+
+/* ------Paly again & quit button styling--- */
+
+.playagainbut {
+	height: 25px;
+	width: 100px;
+	margin: 10px 10px 10px 40px;
+	font-weight: bold;
+	background-color: #ddd;
+
+}
+
+.quitbut {
+	height: 25px;
+	width: 100px;
+	margin: 10px 20px 10px 10px;
+	font-weight: bold;
+	background-color: #ddd;
+
+}
+
+
+
 /* ------Footer styles--- */
 
 footer {
 	clear: both; 
 	width: 100%;
-	height: 80px;
+	height: 50px; 
 	text-align: center;
+	margin-top: 50px;
 }
 
 footer p {
