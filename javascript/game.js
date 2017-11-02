@@ -60,8 +60,6 @@ function guessAction(e) {
 
 			if ((letUsed.length > 0) && (letUsed.indexOf(keyPressed) >= 0)) {
 
-					console.log(letUsed.indexOf(keyPressed));
-
 					if (notTwice = 0) {numLives++; notTwice = 1}
 					warnMsg.innerHTML="Letter already selected. Please select another";
 				}	
@@ -69,7 +67,7 @@ function guessAction(e) {
 
 			else {
 
-				 giveHint(randNum); /*warnMsg.innerHTML="";*/
+				 giveHint(randNum); 
 
 				for (var i=0; i < word.length; i++) { 
 
@@ -189,9 +187,7 @@ function imageChange(dest, newImg) {
  	while (randNum == checkDifferent) {
  		randNum = Math.round((Math.random()*(array.length-1)));}
  
- 	var wd = array[randNum] [0];  
- 	console.log(randNum + "," + wd);
- 	
+ 	var wd = array[randNum] [0]; 
  	return wd;
  }
 

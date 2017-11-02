@@ -5,6 +5,7 @@
 
 
 body {
+	min-width: 600px;
 	font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
 	font-size: 18px;
 	margin: 0;
