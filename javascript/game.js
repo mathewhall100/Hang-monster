@@ -165,8 +165,8 @@ function imageAdd(destination, monsterImg) {
 	var elem = document.createElement('img');
 	elem.setAttribute('id', 'monstimage');
 	elem.setAttribute('src', monsterImg);
-	elem.setAttribute('height', '280px');
-	elem.setAttribute('max-width', '280px');
+	elem.setAttribute('height', '290px');
+	elem.setAttribute('max-width', '290px');
 	elem.setAttribute('alt', 'The demogorgon');
 	document.getElementById(destination).appendChild(elem);
 }
