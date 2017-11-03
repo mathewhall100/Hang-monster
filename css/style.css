@@ -155,15 +155,21 @@ header {
 }
 
 
-.keyboard div {
+/* .keyboard div {
 	width: 320px;
 	margin: 20px auto; 
+} */
+
+.kbdfade {
+	opacity: 0.5;
 }
 
 .key {
 	font-size: 18px;
 	font-weight: bold;
+	margin-right: 6px;
 }
+
 button:hover {
 	color: green;
 	background-color: lightgrey;
@@ -188,7 +194,7 @@ button:hover {
 
 
 
-/* ------FGame over text styling--- */
+/* ------Game over text styling--- */
 
 .gameoverh {
 	color: red;
@@ -225,6 +231,10 @@ button:hover {
 .gameoverl:hover {
 	color: #aaa;
 }
+
+.red {color: red; font-size: 1.1em;}
+.green {color: green}
+
 
 
 /* ------Paly again & quit button styling--- */
