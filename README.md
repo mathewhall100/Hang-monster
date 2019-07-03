@@ -2,7 +2,7 @@
 
 ## Play hangman themed with 'Stranger Things' monsters!
 
-[https://mathewhall100.github.io/Hang-monster/](https://mathewhall100.github.io/Hang-monster/)
+[https://mathewhall100.github.io/hang-monster/](https://mathewhall100.github.io/hang-monster/)
 
 <br />
 
