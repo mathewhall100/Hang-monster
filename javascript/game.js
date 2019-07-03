@@ -16,7 +16,8 @@ var qwertyLetters = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o',
 
 var monstersArray = [	// Array of arrays (2D array) to hold monster data for use in program INdex: (0)name, (1)hint, (2)web reference, (3)picture
 
-	  	['demogorgon', 'the faceless Prince of Demons', 'https://en.wikipedia.org/wiki/Demogorgon', 'demogorgon.jpg',],
+		['demogorgon', 'the faceless Prince of Demons', 'https://en.wikipedia.org/wiki/Demogorgon', 'demogorgon.jpg',],
+		['demogorgon', 'the faceless Prince of Demons', 'https://en.wikipedia.org/wiki/Demogorgon', 'demogorgon.jpg',],
 	  	['pollywog', 'a monstrous tadpole', 'https://www.popsugar.com/entertainment/What-Pollywog-44191387', 'polliwog.jpg',],
 	  	['hydra', 'a many headed serpent', 'https://en.wikipedia.org/wiki/Hydra', 'hydra.jpg',],
 	  	['cyclops','a one eyed monster who lives in a cave', 'https://en.wikipedia.org/wiki/Cyclops', 'cyclops.jpg'],
@@ -127,7 +128,7 @@ game.setUp = function(message, delay) {									// Set up an interval timer to d
 
 game.imageChange = function(destination, newImg) {
 	var elem = document.getElementById(destination);
-	if (newImg.indexOf('http') !== 0) {newImg = "images/" + newImg;}
+	// if (newImg.indexOf('http') !== 0) {newImg = "images/" + newImg;}
 	elem.setAttribute('src', newImg);	
 };
 
@@ -411,7 +412,7 @@ game.playAgain = function() {
 
   	game.printFunc('hangboxtext', instructions);
 
-    game.imageChange('monstimage', 'poster.JPG');
+    game.imageChange('monstimage', 'images/poster.JPG');
 
     game.word = game.randWord(monstersArray);
 
@@ -549,7 +550,7 @@ function guessAction(e) {
 				game.printMonsterLnk(monstersArray[game.randNum][2])
 				
 				var monst = monstersArray[game.randNum] [3];					// Change image to current monster
-				game.imageChange('monstimage', monst);
+				game.imageChange('monstimage', "images/" + monst);
 
 				game.audioPause();															// pause the audio
 
@@ -570,7 +571,7 @@ function guessAction(e) {
 				game.printMonsterLnk(monstersArray[game.randNum][2])
 
 				var monst = monstersArray[game.randNum] [3];
-				game.imageChange('monstimage', monst);
+				game.imageChange('monstimage', "images/" + monst);
 
 				game.audioPause();
 
