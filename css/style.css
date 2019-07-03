@@ -198,7 +198,7 @@ button:hover {
 
 .gameoverh {
 	color: red;
-	padding-left: 40px;	
+	padding-left: 30px;	
 }
 
 .youwonh {
@@ -222,14 +222,59 @@ button:hover {
 
 }
 
-.gameoverl {
-	text-align: center;
+.gameover1 {
+	position: relative;
+	left: 25px;
+	top: -20px;
 	color: #ddd;
 	font-size: 18px;
 }
 
-.gameoverl:hover {
+.gameover1:hover {
 	color: #aaa;
+}
+
+.addMonstBtn {
+	margin: 10px 0 25px 75px;
+	color: blue;
+	font-weight: bold;
+	border: 2px solid grey;
+	font-size: 18px;
+}
+
+.inputLabel {
+	text-align: left !important;
+	margin: 5px 0 2px 20px;
+	font-size: 17px;
+}
+
+.inputEl {
+	margin: 0 0 5px 20px;
+	width: 80%
+}
+.inputElReq {
+	margin: 0 0 5px 20px;
+	width: 80%;
+	border: 2px solid red
+}
+
+.submitBtn {
+	margin: 15px 0 0 20px;
+	color: blue;
+	font-weight: bold;
+	border: 2px solid grey;
+	font-size: 18px;
+}
+
+.inputMsg {
+	text-align: right !important;
+	margin: 0 20px 0 0;
+	font-size: 14px
+}
+
+.addSuccesstText {
+	text-align: center !important;
+	font-size: 18px
 }
 
 .red {color: red; font-size: 1.1em;}

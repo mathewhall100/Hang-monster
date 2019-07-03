@@ -127,6 +127,7 @@ game.setUp = function(message, delay) {									// Set up an interval timer to d
 
 game.imageChange = function(destination, newImg) {
 	var elem = document.getElementById(destination);
+	if (newImg.indexOf('http') !== 0) {newImg = "images/" + newImg;}
 	elem.setAttribute('src', newImg);	
 };
 
@@ -241,8 +242,19 @@ game.giveHint = function(ind) {
 
  /* Function: create play again and quit buttons and add event handlers*/
 
-game.againOrQuit = function() {													
+game.againOrQuit = function(win) {
+	var elem
+	if (win) {
+		elem = document.createElement('button');									// create new button element
+			elem.setAttribute('id', 'addMonster');										// Add attributes incl id for event listener
+			elem.setAttribute('class', 'addMonstBtn');									// Add attributes incl class for styling
+			elem.innerHTML = "Add New Monster";												// Give it some text to dispaly
+		game.getInstructBox.appendChild(elem);	
 
+		var elAdd = document.getElementById('addMonster');									// Add an event listener to new button
+		elAdd.addEventListener('click', game.newMonster, false);
+	}
+ 
 	var elem = document.createElement('button');									// create new button element
 		elem.setAttribute('id', 'playagain');										// Add attributes incl id for event listener
 		elem.setAttribute('class', 'playagainbut');									// Add attributes incl class for styling
@@ -256,15 +268,11 @@ game.againOrQuit = function() {
 	game.getInstructBox.appendChild(elem);
 
 	var el1 = document.getElementById('playagain');									// Add an event listener to new button
-	el1.addEventListener('click', game.playAgain, false);							// Has to be done in same funtion scope as button is created 
-																					// ** Note no parameters so no ()
-																					// ** If () included then function called immediately 
-																					// ** compare this to keyboard event listener where function has paraneters 
-																					// ** but to avoid immediate function call have function calling function ()
+	el1.addEventListener('click', game.playAgain, false);							
 																					
-
 	var el2 = document.getElementById('quit');										// "" See above
 	el2.addEventListener('click', game.quitGame, false);
+
 };
 
  /* Function: Display correct answer with unguessed letters in red*/
@@ -289,6 +297,104 @@ game.againOrQuit = function() {
 
 }
 
+/* Link to further information on monster */
+
+game.printMonsterLnk = function(lnk) {
+	var a = document.createElement('a');
+		a.href = lnk;    
+		a.target = '_blank';
+		a.setAttribute('class', 'gameover1');
+		a.innerHTML = "Read more about this monster!";
+		hangboxtext.appendChild(a)
+}
+
+game.newMonster = function(event, required=null, newMonster=null) {
+	var labels=["Monster name", "Add a hint", "URL to more info", "URL to image"]
+
+	document.getElementById('hangboxtext').innerHTML="";   							// clear box for form
+
+	var f = document.createElement("form");
+	f.setAttribute('id', 'myform')
+
+	for (i=0; i<4; i++) {
+
+		var label = document.createElement("p"); 									// input element labels
+		label.setAttribute('class', 'inputLabel')
+		label.innerHTML=labels[i]+"*";
+
+		var name = [];
+		name[i] = document.createElement("input"); 									// input element, text
+		name[i].setAttribute('type',"text");
+		name[i].setAttribute('name',"mName");
+		name[i].setAttribute('id', 'id'+i)
+		if (newMonster && newMonster[i]) {name[i].setAttribute('value', newMonster[i]) }
+		if (required && required[i]) {
+			name[i].setAttribute('class', 'inputElReq') 
+		} else {
+			name[i].setAttribute('class', 'inputEl');
+		}
+
+		f.appendChild(label)
+		f.appendChild(name[i]);
+	}
+
+	var submit = document.createElement("button"); 									// input element, Submit button
+	submit.setAttribute('type', 'button');
+	submit.setAttribute('id', 'submitForm');
+	submit.setAttribute('class', 'submitBtn');
+	submit.innerHTML = "Add Monster";
+	submit.addEventListener('click', game.addMonster, false);
+
+	var cancel = document.createElement("button");
+	cancel.setAttribute('type', 'button');
+	cancel.setAttribute('id', 'cancelForm');
+	cancel.setAttribute('class', 'submitBtn');
+	cancel.innerHTML = "Cancel"
+	cancel.addEventListener('click', game.finishAddMonster, false);
+
+	f.appendChild(submit);
+	f.appendChild(cancel);
+
+	var msg = document.createElement("p"); 									// input element labels
+		msg.setAttribute('class', 'inputMsg')
+		msg.innerHTML="* = required";
+
+	f.appendChild(msg)
+
+	hangboxtext.appendChild(f);
+}
+
+game.addMonster = function(event) {
+	event.preventDefault()
+	var newMonster = [];
+	var required = [];
+	for (i=0; i<4; i++) {
+		var value = document.getElementById('id'+i).value;
+		if (value.length > 2) {
+			newMonster[i] = value;
+		} else {
+			required[i] = true;
+		}
+	}
+	if (required.length > 0) {
+		game.newMonster(null, required, newMonster)
+	} else {	
+		monstersArray.push(newMonster)
+		console.log(monstersArray)
+		game.finishAddMonster(true)
+	}
+}
+
+game.finishAddMonster = function(added) {
+	if (added) {
+		document.getElementById('hangboxtext').innerHTML="<br /><br /><br /><br /><p class='addSuccessText'>Monster successfully added and will appear randomly in the game. <p><br />"
+		game.againOrQuit(false)
+	} else {
+		document.getElementById('hangboxtext').innerHTML="<br /><br /><br /><br /><br />";
+		game.againOrQuit(true)
+	}
+}
+
 
   /* Function: Playagain
      re-initialise game variables and run through required subset of startup functions */
@@ -305,7 +411,7 @@ game.playAgain = function() {
 
   	game.printFunc('hangboxtext', instructions);
 
-    game.imageChange('monstimage', 'images/poster.JPG');
+    game.imageChange('monstimage', 'poster.JPG');
 
     game.word = game.randWord(monstersArray);
 
@@ -415,7 +521,7 @@ function guessAction(e) {
 				
 				}
 
-				game.wordGuessed = game.printGuesses(game.guesses);							// Dispaly current state of user guesses 						
+				game.wordGuessed = game.printGuesses(game.guesses);							// Display current state of user guesses 						
 
 				if (game.keyPressed != "") {game.letUsed.push(game.keyPressed)}				// Update and display used Letters with latast keypress (provided keyPress doesn't equal "")
 				game.updateLetUsed(game.letUsed);
@@ -437,44 +543,38 @@ function guessAction(e) {
 
 				var msg = 	'<h1 class="gameoverh">GAME OVER<h1>' + 
 			  				'<p class="gameoverp">The monster was a ' + 
-			  				'<span class="gameoverm">' + game.word + '</span>.</p>'+		// Add a class for styling
-			  				'<p class="gameoverp">Read more about this monster <br />' + 
-			 				 '<a href=monstersArray[game.randNum] [3] target="_blank" class="gameoverl">HERE</a></p>'; // Add a link
-
+			  				'<span class="gameoverm">' + game.word + '</span>.</p>'		// Add a class for styling
 
 				game.printFunc('hangboxtext', msg);
-
-				var monst = "images/" + monstersArray[game.randNum] [3];					// Change image to current monster
+				game.printMonsterLnk(monstersArray[game.randNum][2])
+				
+				var monst = monstersArray[game.randNum] [3];					// Change image to current monster
 				game.imageChange('monstimage', monst);
 
 				game.audioPause();															// pause the audio
 
-				game.againOrQuit();															// Game over - player lost - call gameLost function
+				game.againOrQuit(false);															// Game over - player lost - call gameLost function
 			}
 
 
 			if (game.wordGuessed == game.word) {											// Player won - guessed word = monstername																	
-
 				game.kbd = "inactive";														// "" as above
 
 				game.getKeyboard.setAttribute('class', 'clearfix center kbdfade');
 
-
-
 				var msg = 	'<h1 class="youwonh">You Won!<h1>' + 
 					  		'<p class="gameoverp">The monster was a ' + 
-					  		'<span class="gameoverm">' + game.word + '</span>.</p>'+
-					  		'<p class="gameoverp">Read more about this monster <br />' + 
-					  		'<a href=monstersArray[game.randNum] [3] target="_blank" class="gameoverl">HERE</a></p>';
+					  		'<span class="gameoverm">' + game.word + '</span>.</p>'
 
 				game.printFunc('hangboxtext', msg);
+				game.printMonsterLnk(monstersArray[game.randNum][2])
 
-				var monst = "images/" + monstersArray[game.randNum] [3];
+				var monst = monstersArray[game.randNum] [3];
 				game.imageChange('monstimage', monst);
 
 				game.audioPause();
 
-				game.againOrQuit();													// Game over - player won - call gameWon function
+				game.againOrQuit(true);													// Game over - player won - call gameWon function
 																					// ** Note the wordGuessed string has no spaces since we separate out the letters using letter-spacing in the CSS
 
 			}		 
